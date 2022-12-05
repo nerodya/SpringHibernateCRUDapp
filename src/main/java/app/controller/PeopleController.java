@@ -34,11 +34,7 @@ public class PeopleController {
     public String show(@PathVariable("id") int id,
                        Model model){
 
-        try {
-            model.addAttribute("person", personDAO.show(id));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }
 
@@ -61,11 +57,7 @@ public class PeopleController {
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
-        try {
-            model.addAttribute("person", personDAO.show(id));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        model.addAttribute("person", personDAO.show(id));
         return "people/edit";
     }
 
