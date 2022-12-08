@@ -11,7 +11,7 @@
 
   <name>SpringMVCProgect Maven Webapp</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -95,9 +95,6 @@
       <version>42.5.1</version>
     </dependency>
 
-
-
-
   </dependencies>
 
 <!--  _______________________________________________________________________________________________________________-->
@@ -138,4 +135,11 @@
       </plugins>
     </pluginManagement>
   </build>
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <name>Clojars</name>
+      <url>https://repo.clojars.org/</url>
+    </repository>
+  </repositories>
 </project>
