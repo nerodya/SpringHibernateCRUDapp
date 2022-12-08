@@ -1,7 +1,6 @@
 package app.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,15 +27,6 @@ import java.util.Objects;
 public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
     private final Environment environment;
-
-    @Value("${driver}")
-    private String dbDriver;
-    @Value("${url}")
-    private String dbUrl;
-    @Value("${username}")
-    private String dbUsername;
-    @Value("${password}")
-    private String dbPassword;
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment) {

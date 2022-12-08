@@ -38,14 +38,14 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO person(name, age, email) VALUES(?, ?, ?)",
-                person.getName(), person.getAge(), person.getEmail());
+        jdbcTemplate.update("INSERT INTO person(name, age, email, address) VALUES(?, ?, ?, ?)",
+                person.getName(), person.getAge(), person.getEmail(), person.getAddress());
     }
 
 
     public void update(int id, Person person) {
-        jdbcTemplate.update("update person set name=?, age=?, email=? where id=?", person.getName(), person.getAge(),
-                person.getEmail(), id);
+        jdbcTemplate.update("update person set name=?, age=?, email=?, address=? where id=?", person.getName(), person.getAge(),
+                person.getEmail(), person.getAddress(), id);
     }
 
     public void delete(int id) {
