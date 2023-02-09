@@ -1,35 +1,34 @@
 package app.controller;
 
-
-import app.dao.BookDAO;
-import app.dao.PersonDAO;
 import app.models.Book;
 import app.models.Person;
+import app.services.BookService;
+import app.services.PersonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
+//import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
-    private final BookDAO bookDAO;
-    private final PersonDAO personDAO;
+    private final BookService bookService;
+    private final PersonService personService;
 
     @Autowired
-    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
-        this.bookDAO = bookDAO;
-        this.personDAO = personDAO;
+    public BookController(BookService bookService, PersonService personService) {
+        this.bookService = bookService;
+        this.personService = personService;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("books", bookDAO.index());
+        model.addAttribute("books", bookService.findAll());
         return "/books/index";
     }
 
@@ -37,8 +36,8 @@ public class BookController {
     public String show(@PathVariable("id") int id_book,
                        Model model, @ModelAttribute("person") Person person) {
 
-        model.addAttribute("book", bookDAO.show(id_book));
-        model.addAttribute("people", personDAO.index());
+        model.addAttribute("book", bookService.findOne(id_book));
+        model.addAttribute("people", personService.findAll());
 
         return "/books/show";
     }
@@ -56,13 +55,13 @@ public class BookController {
         if (bindingResult.hasErrors())
             return "books/new";
 
-        bookDAO.createBook(book);
+        bookService.save(book);
         return "redirect:/books";
     }
 
     @GetMapping("/{id}/update")
     public String pageEdit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("book", bookService.findOne(id));
         return "/books/update";
     }
 
@@ -75,7 +74,7 @@ public class BookController {
         if (bindingResult.hasErrors())
             return "books/update";
 
-        bookDAO.edit(book, id);
+        bookService.update(id, book);
         return "redirect:/books";
     }
 
@@ -84,8 +83,7 @@ public class BookController {
     public String appoint(@ModelAttribute("id_person") Integer id_person,
                           @PathVariable Integer id) {
 
-        System.out.println(id + " " + id_person);
-        bookDAO.editClient(id, id_person);
+        bookService.editClient(id, id_person);
         return "redirect:/books";
     }
 
@@ -93,13 +91,13 @@ public class BookController {
     public String free(@PathVariable Integer id) {
 
         System.out.println(id);
-        bookDAO.freeClient(id);
+        bookService.freeClient(id);
         return "redirect:/books";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) {
-        bookDAO.delete(id);
+        bookService.delete(id);
         return "redirect:/books";
     }
 }

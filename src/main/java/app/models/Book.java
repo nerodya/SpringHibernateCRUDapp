@@ -1,15 +1,16 @@
 package app.models;
 
 
-
+import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+//import javax.validation.constraints.*;
 
 
 @Entity
 @Table(name = "book")
 public class Book {
+
 
     @Id
     @Column(name = "id_book")
@@ -36,14 +37,17 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    public Book(Person owner, String name_book,  int year, String author) {
+    public Book(Person owner, String name_book, int year, String author) {
         this.owner = owner;
         this.name_book = name_book;
         this.author = author;
         this.year = year;
     }
 
-    public Book(){};
+    public Book() {
+    }
+
+    ;
 
     public String getAuthor() {
         return author;

@@ -13,9 +13,13 @@
 
 <p th:if="${person.getBooks().isEmpty()}">Человек пока не взял ни одной книги</p>
 
+
+<!--<p th:unless="${person.getBooks().isEmpty()}">Книги:</p>-->
+<!--<div th:unless="${person.getBooks().isEmpty()}" th:each="book : ${person.getBooks()}"-->
+<!--   th:text="${book.getName_book() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></div>-->
 <p th:unless="${person.getBooks().isEmpty()}">Книги:</p>
 <div th:unless="${person.getBooks().isEmpty()}" th:each="book : ${person.getBooks()}"
-   th:text="${book.getName_book() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></div>
+     th:text="${book.getName_book() + ', ' + book.getAuthor() + ', ' + book.getYear()}"></div>
 
 <br/>
 <hr/>
