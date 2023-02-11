@@ -4,12 +4,14 @@ import app.models.Book;
 import app.models.Person;
 import app.services.BookService;
 import app.services.PersonService;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 //import javax.validation.Valid;
 
@@ -27,8 +29,12 @@ public class BookController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String index(@RequestParam(defaultValue = "null") String  page,
+                        @RequestParam(defaultValue = "null") String  books_per_page,
+                        @RequestParam(defaultValue = "null") String  sort_by_year,
+                        Model model) throws Exception {
+
+        model.addAttribute("books", bookService.findAll(page, books_per_page, sort_by_year));
         return "/books/index";
     }
 
@@ -37,6 +43,7 @@ public class BookController {
                        Model model, @ModelAttribute("person") Person person) {
 
         model.addAttribute("book", bookService.findOne(id_book));
+        System.out.println(bookService.findOne(id_book).hasOverdue());
         model.addAttribute("people", personService.findAll());
 
         return "/books/show";
@@ -89,8 +96,6 @@ public class BookController {
 
     @PatchMapping("/free/{id}")
     public String free(@PathVariable Integer id) {
-
-        System.out.println(id);
         bookService.freeClient(id);
         return "redirect:/books";
     }
@@ -99,5 +104,18 @@ public class BookController {
     public String delete(@PathVariable("id") int id) {
         bookService.delete(id);
         return "redirect:/books";
+    }
+
+    @GetMapping("/pageResearch")
+    public String pageResearch(Model model){
+        model.addAttribute("book", new Book());
+        return "books/research";
+    }
+
+    @GetMapping("/foundBook")
+    public String foundBook(@RequestParam("name") String name,
+                            Model model){
+        model.addAttribute("book", bookService.findByNameStartingWith(name));
+        return "books/foundBook";
     }
 }

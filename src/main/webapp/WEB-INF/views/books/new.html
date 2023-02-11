@@ -10,8 +10,8 @@
 <body>
 <form th:method="POST" th:action="@{/books}" th:object="${book}">
     <label for="name_book">Введите название: </label>
-    <input type="text" th:field="*{name_book}" id="name_book">
-    <div style="color: red" th:if="${#fields.hasErrors('name_book')}" th:errors="*{name_book}">name_book error</div>
+    <input type="text" th:field="*{name}" id="name_book">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name_book error</div>
 
     <br/>
     <label for="author">Введите автора: </label>

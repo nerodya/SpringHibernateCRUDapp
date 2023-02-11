@@ -3,12 +3,14 @@ package app.controller;
 
 import app.models.Person;
 import app.services.PersonService;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 //import javax.validation.Valid;
 
@@ -32,8 +34,6 @@ public class PersonController {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id_person) {
         model.addAttribute("person", personService.findOne(id_person));
-//        model.addAttribute("books", personService.bookList(id_person));
-
         return "people/show";
     }
 

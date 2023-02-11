@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<p th:text="${book.getName_book() + ', ' + book.getAuthor() + ', ' + book.getYear()}"/>
+<p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}"/>
 
 <!--="@{/books/edit_person/{id}(id=${book.getId_book()})}"-->
 <form th:method="PATCH" th:action="@{/books/appoint/{id}(id=${book.getId_book()})}"

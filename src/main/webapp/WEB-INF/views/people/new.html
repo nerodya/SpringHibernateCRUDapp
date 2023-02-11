@@ -14,8 +14,8 @@
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error</div>
     <br/>
     <label for="year_birth">Введите год рождения: </label>
-    <input type="text" th:field="*{year_birth}" id="year_birth">
-    <div style="color: red" th:if="${#fields.hasErrors('year_birth')}" th:errors="*{year_birth}">year_birth error</div>
+    <input type="text" th:field="*{yearBirth}" id="year_birth">
+    <div style="color: red" th:if="${#fields.hasErrors('yearBirth')}" th:errors="*{yearBirth}">yearBirth error</div>
     <br/>
     <hr/>
     <input type="submit" value="Создать!">

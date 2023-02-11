@@ -10,7 +10,10 @@
 <body>
 <div>
     <a href="people">Show people</a>
+    <br>
     <a href="books">Show books</a>
+    <br>
+    <a href="books/pageResearch">Research book</a>
 </div>
 </body>
 </html>

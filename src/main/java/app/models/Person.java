@@ -1,11 +1,9 @@
 package app.models;
-
-//import jakarta.persistence.*;
-
-import jakarta.validation.constraints.*;
+//import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
-//import javax.validation.constraints.*;
+import javax.validation.constraints.*;
+
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class Person {
 
     @Min(value = 1900, message = "Некорректный год рождения")
     @Column(name = "year_birth")
-    private int year_birth;
+    private int yearBirth;
 
     @Pattern(regexp = "^([А-Я][а-я]+) ([А-Я][а-я]+) ([А-Я][а-я]+)$", message = "РеГуЛяРоЧкА")
     @NotEmpty(message = "Имя не может быть пустым")
@@ -31,8 +29,8 @@ public class Person {
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
 
-    public Person(int year_birth, String name) {
-        this.year_birth = year_birth;
+    public Person(int yearBirth, String name) {
+        this.yearBirth = yearBirth;
         this.name = name;
     }
 
@@ -46,12 +44,12 @@ public class Person {
         this.id_person = id_person;
     }
 
-    public int getYear_birth() {
-        return year_birth;
+    public int getYearBirth() {
+        return yearBirth;
     }
 
-    public void setYear_birth(int year_birth) {
-        this.year_birth = year_birth;
+    public void setYearBirth(int yearBirth) {
+        this.yearBirth = yearBirth;
     }
 
     public String getName() {

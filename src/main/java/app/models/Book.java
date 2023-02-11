@@ -1,9 +1,11 @@
 package app.models;
 
 
-import jakarta.validation.constraints.*;
+//import jakarta.validation.constraints.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.Date;
 //import javax.validation.constraints.*;
 
 
@@ -24,7 +26,7 @@ public class Book {
     @NotEmpty(message = "Имя не может быть пустым")
     @Size(min = 2, max = 50, message = "Слишком короткое или длинное название")
     @Column(name = "name_book")
-    private String name_book;
+    private String name;
 
     @Max(value = 2023, message = "Некорректный год")
     @Min(value = 0, message = "Некорректный год")
@@ -37,17 +39,26 @@ public class Book {
     @Column(name = "author")
     private String author;
 
-    public Book(Person owner, String name_book, int year, String author) {
+    @Column(name = "date_issue")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateIssue;
+
+
+    public boolean hasOverdue(){
+        if (dateIssue == null)
+            return false;
+        return Math.round((new Date().getTime() - dateIssue.getTime()) / (1000.0 * 60 * 60 * 24)) > 10;
+    }
+
+    public Book(Person owner, String name, int year, String author) {
         this.owner = owner;
-        this.name_book = name_book;
+        this.name = name;
         this.author = author;
         this.year = year;
     }
 
     public Book() {
     }
-
-    ;
 
     public String getAuthor() {
         return author;
@@ -65,14 +76,6 @@ public class Book {
         this.year = year;
     }
 
-    public String getName_book() {
-        return name_book;
-    }
-
-    public void setName_book(String name_book) {
-        this.name_book = name_book;
-    }
-
     public int getId_book() {
         return id_book;
     }
@@ -87,5 +90,21 @@ public class Book {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDateIssue() {
+        return dateIssue;
+    }
+
+    public void setDateIssue(Date dateIssue) {
+        this.dateIssue = dateIssue;
     }
 }
