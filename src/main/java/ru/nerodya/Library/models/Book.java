@@ -37,12 +37,14 @@ public class Book {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateIssue;
 
+    @Transient
+    private boolean expired;
 
-    public boolean hasOverdue(){
-        if (dateIssue == null)
-            return false;
-        return Math.round((new Date().getTime() - dateIssue.getTime()) / (1000.0 * 60 * 60 * 24)) > 10;
-    }
+//    public boolean hasOverdue(){
+//        if (dateIssue == null)
+//            return false;
+//        return Math.round((new Date().getTime() - dateIssue.getTime()) / (1000.0 * 60 * 60 * 24)) > 10;
+//    }
 
     public Book(Person owner, String name, int year, String author) {
         this.owner = owner;
@@ -100,5 +102,13 @@ public class Book {
 
     public void setDateIssue(Date dateIssue) {
         this.dateIssue = dateIssue;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 }

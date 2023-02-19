@@ -55,7 +55,10 @@ public class BookService {
 
     @Transactional
     public void update(int id, Book book) {
+        Optional<Book> bookToBeUpdate = booksRepository.findById(id);
+
         book.setId_book(id);
+        book.setOwner(bookToBeUpdate.map(Book::getOwner).orElse(null));
         booksRepository.save(book);
     }
 
@@ -67,15 +70,22 @@ public class BookService {
     //    это пиздец переделать
     @Transactional
     public void editClient(int id_book, int id_person) {
-        Optional<Book> book = booksRepository.findById(id_book);
-        book.ifPresent(value -> value.setDateIssue(new Date()));
-        book.ifPresent(value -> value.setOwner(pepleRepository.findById(id_person).orElse(null)));
+        booksRepository.findById(id_book).ifPresent(
+                book -> {
+                    book.setDateIssue(new Date());
+                    book.setOwner(pepleRepository.findById(id_person).orElse(null));
+                }
+        );
     }
 
     @Transactional
     public void freeClient(int id) {
-        booksRepository.findById(id).ifPresent(value -> value.setDateIssue(null));
-        booksRepository.findById(id).ifPresent(value -> value.setOwner(null));
+        booksRepository.findById(id).ifPresent(
+                book -> {
+                    book.setOwner(null);
+                    book.setDateIssue(null);
+                }
+        );
     }
 
     public List<Book> findByNameStartingWith(String name_book) {

@@ -29,6 +29,7 @@ public class PersonController {
     @GetMapping("/{id}")
     public String show(Model model, @PathVariable("id") int id_person) {
         model.addAttribute("person", personService.findOne(id_person));
+        model.addAttribute("books", personService.bookList(id_person));
         return "people/show";
     }
 

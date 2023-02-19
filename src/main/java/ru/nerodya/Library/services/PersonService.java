@@ -9,10 +9,7 @@ import ru.nerodya.Library.models.Book;
 import ru.nerodya.Library.models.Person;
 import ru.nerodya.Library.repositories.PepleRepository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,12 +33,21 @@ public class PersonService {
         return foundPerson.orElse(null);
     }
 
-//    пиздец
     public List<Book> bookList(int id){
         Optional<Person> foundPerson = pepleRepository.findById(id);
-        if (foundPerson.isPresent())
+        if(foundPerson.isPresent()){
+            Hibernate.initialize(foundPerson.get().getBooks());
+
+            foundPerson.get().getBooks().forEach(book -> {
+                if (book.getDateIssue() != null) {
+                    long diffInMillies = Math.abs(new Date().getTime() - book.getDateIssue().getTime());
+                    if (diffInMillies > 864000000)
+                        book.setExpired(true);
+                }
+            });
             return foundPerson.get().getBooks();
-        else return new ArrayList<>(Collections.emptyList());
+        } else
+            return Collections.emptyList();
     }
 
     @Transactional
@@ -58,5 +64,9 @@ public class PersonService {
     @Transactional
     public void delete(int id){
         pepleRepository.deleteById(id);
+    }
+
+    public Optional<Person> findByName(String name){
+        return pepleRepository.findByName(name);
     }
 }

@@ -11,8 +11,6 @@ import ru.nerodya.Library.models.Person;
 import ru.nerodya.Library.services.BookService;
 import ru.nerodya.Library.services.PersonService;
 
-//import javax.validation.Valid;
-
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -41,7 +39,6 @@ public class BookController {
                        Model model, @ModelAttribute("person") Person person) {
 
         model.addAttribute("book", bookService.findOne(id_book));
-        System.out.println(bookService.findOne(id_book).hasOverdue());
         model.addAttribute("people", personService.findAll());
 
         return "/books/show";
